@@ -5,7 +5,7 @@ Param(
     [string]$Environment,
     [Parameter(Mandatory=$true)]
     [string]$AppServiceType,
-    [string]$AppServicePrefix = "web-usw1-sc",
+    [string]$AppServicePrefix = "[APP SERVICE PREFIX]", #The prefix at the beginning of your cm/cd app services before the asset designation -cm-
     [string]$SlotName = "staging",
     [switch]$Xml,
     [switch]$Model,

@@ -2,13 +2,12 @@ param(
 	[Parameter(Mandatory=$true)]
     [string]$ResourceGroupName,
     [Parameter(Mandatory=$true)]
-	[string]$AppServiceName,
-	[string]$FolderKey = "bddd479b76cf445da6c3cb693c8c1aa1",
-	[string]$AccessKey = "26280bec0e774193bee55ccf5a374da5",
-	[switch]$Async
+	[string]$AppServiceName
 )
 . "$PSScriptRoot\..\Get-KuduUtility.ps1"
 
+$folderKey = -join ((97..122) | Get-Random -Count 10 | ForEach-Object {[char]$_})
+$accessKey = -join ((97..122) | Get-Random -Count 10 | ForEach-Object {[char]$_})
 (Get-Content "$PSScriptRoot\SearchManager.asmx").Replace("[TOKEN]", $AccessKey) | Set-Content "$PSScriptRoot\tmp.asmx"
 Write-FileFromPathToWebApp -resourceGroupName $ResourceGroupName -webAppName $AppServiceName -slotName "" -filePath "$PSScriptRoot\tmp.asmx" -kuduPath "SearchManager/$FolderKey/SearchManager.asmx"
 Remove-Item "$PSScriptRoot\tmp.asmx" -Force
@@ -50,5 +49,9 @@ for($i = 0; $i -lt 10; $i++){
 		Start-Sleep -Seconds 30
 		write-host "Error encountered, for attempt $i"
 		write-host $_.Exception.GetType().FullName, $_.Exception.Message
+	}finally{
+		Write-Host "Removing Sitecore Publish service"
+		Remove-FileFromWebApp -resourceGroupName $ResourceGroupName -webAppName $AppServiceName -slotName "" -kuduPath "SearchManager/$folderKey/SearchManager.asmx"
+		Remove-FileFromWebApp -resourceGroupName $ResourceGroupName -webAppName $AppServiceName -slotName "" -kuduPath "SearchManager/$folderKey"
 	}
 }
