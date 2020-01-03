@@ -5,7 +5,7 @@
 2. Make copies of all the web databases and rewire CM [**Copy-WebDatabaseRewireCM.ps1**](Copy-WebDatabaseRewireCM.ps1)
 3. Build new SOLR (or any search) and rewire CM [_See Azure Search Subsection_](AzureSearch)
 4. Rebuild Search Indexes  [_See Azure Search Subsection_](AzureSearch)
-5. Copy CD PRODUCTION slot to STAGING [**Copy-ProductionSlotToStaging.ps1**](Copy-ProductionSlotToStaging.ps1). Doesn't copy EVERYTHING, only licenses and App_Config.  The rest is expected to be handled by your build/release pipelines.
+5. Copy CD PRODUCTION slot to STAGING [**Copy-ProductionSlotToStaging.ps1**](Copy-ProductionSlotToStaging.ps1). Doesn't copy EVERYTHING, only the stock App_Data directory (found in zip file at root, replace with a zip of whatever version of Sitecore you're using) along with Sitecore license and App_Config.  The rest is expected to be handled by your build/release pipelines.
 6. Rewire CD Staging slots to use the new databases [**Switch-ActiveDatabase.ps1**](Switch-ActiveDatabase.ps1)
 7. Deploy Normally to your CM environment and deploy to the STAGING slot for CD environments. At this point any changes to content and publishes are going to be delivered to the STAGING slot environments.  If you're not replicating your search indexes a publishing freeze is recommended as the mismatched content could cause issues between your STAGING and PRODUCTION slots.
 8. Test environment
