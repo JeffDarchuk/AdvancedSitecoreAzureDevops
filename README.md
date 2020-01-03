@@ -11,7 +11,7 @@ A set of powershell functions to facilitate communication with App Services.  Th
 ##### Found [here](Invoke-ScriptWithRetry.ps1)
 Azure has transient errors that simply need to be retried, this accomplishes giving things a few tries with custom failure validation for those cases where the script doesn't actually fail despite the reports from Azure.  A well set up execution of this strategy should give our scripts the best chance to succeed given the random instability of Azure in general.
 ## Blue/Green
-### Usage guide [here](bluegreen)
+### Usage guide [here](BlueGreen)
 In an Azure PaaS environment zero downtime deployments are a possibility.  By dynamically duplicating databases and rewiring app services we can fairly simply achieve this.
 ## Sitecore Services
 ### Usage guide [here](Services)
